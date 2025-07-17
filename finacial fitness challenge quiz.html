@@ -1,0 +1,87 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Financial Fitness Test</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+    h1 { text-align: center; color: #333; }
+    .question { background: #fff; padding: 10px; margin-bottom: 15px; border-radius: 8px; }
+    button { background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+    .result { margin-top: 20px; padding: 15px; background-color: #d1ecf1; border-left: 5px solid #0c5460; font-size: 18px; }
+  </style>
+</head>
+<body>
+
+<h1>💰 Financial Fitness Test – Grade 7 & 8</h1>
+
+<form id="quizForm">
+  <!-- Questions will be inserted here by JavaScript -->
+</form>
+
+<center><button type="button" onclick="submitQuiz()">Submit Quiz</button></center>
+
+<div id="result" class="result" style="display:none;"></div>
+
+<script>
+  const questions = [
+    { q: "What does 'Budget' mean?", a: 1, options: ["Spending as much as possible", "A plan for how to use money", "A type of currency", "A way to count coins"] },
+    { q: "What is the full form of UPI?", a: 0, options: ["Unified Payment Interface", "Unique Personal Identity", "Universal Payment Indicator", "United Payment India"] },
+    { q: "EMI is:", a: 1, options: ["Extra Money Income", "Equal Monthly Installment", "Electronic Money Indicator", "Estimated Monthly Invoice"] },
+    { q: "Which is a Savings Account?", a: 2, options: ["Fixed Deposit", "Credit Card Account", "Savings Account", "Locker Account"] },
+    
+    { q: "If you have Rs.1000 and spend Rs.800, what do you save?", a: 0, options: ["Rs.200", "Rs.800", "Rs.1000", "Rs.1200"] },
+    { q: "Which is a Need, not a Want?", a: 2, options: ["Ice Cream", "Mobile Phone", "School Books", "Movie Ticket"] },
+    { q: "Best way to use your pocket money?", a: 1, options: ["Spend it all on snacks", "Save part and spend part wisely", "Buy expensive gadgets", "Lend it to friends"] },
+    
+    { q: "Safest way for digital payment:", a: 1, options: ["Share OTP", "Use UPI with PIN kept secret", "Click unknown links", "Give card to strangers"] },
+    
+    { q: "To buy Rs.6000 cycle saving Rs.500/month, how many months?", a: 0, options: ["10", "12", "8", "6"] },
+   
+    { q: "Benefit of saving early?", a: 2, options: ["Lose money", "Pay more tax", "Savings grow over time", "No benefit"] }
+  ];
+
+  const form = document.getElementById("quizForm");
+
+  // Dynamically create questions
+  questions.forEach((q, i) => {
+    const div = document.createElement("div");
+    div.className = "question";
+    let html = `<p><strong>Q${i+1}. ${q.q}</strong></p>`;
+    q.options.forEach((opt, j) => {
+      html += `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`;
+    });
+    div.innerHTML = html;
+    form.appendChild(div);
+  });
+
+  function submitQuiz() {
+    let score = 0;
+
+    questions.forEach((q, i) => {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (selected && parseInt(selected.value) === q.a) {
+        score++;
+      }
+    });
+
+    let interpretation = "";
+    if (score >= 13) {
+      interpretation = "💪 <strong>Money Master</strong> – Excellent financial awareness!";
+    } else if (score >= 10) {
+      interpretation = "👍 <strong>Budget Beginner</strong> – You’re on the right path.";
+    } else if (score >= 7) {
+      interpretation = "🛠️ <strong>Learning Saver</strong> – Keep exploring to build confidence.";
+    } else {
+      interpretation = "🔍 <strong>Needs More Practice</strong> – Let’s grow your financial skills!";
+    }
+
+    const resultDiv = document.getElementById("result");
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML = `<strong>Your Score: ${score}/15</strong><br>${interpretation}`;
+  }
+</script>
+
+</body>
+</html>
+
